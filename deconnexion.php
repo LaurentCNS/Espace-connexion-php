@@ -1,18 +1,28 @@
 <?php
 // session cookies
 session_start();
-// SI la seesion est validé 
-if(!empty($_SESSION['isConnected'])){
-    comptePage(); // On lance la procedure
-}else{
-    header('location:traitement.php'); // On envoi sur la page de traintement
+
+// SI la session est validé  
+if (!empty($_SESSION['isConnected'])) {
+    // Si le choix de confirmation est validé
+    if (!empty($_GET['deco'])){
+        session_destroy();     // Destruction de la session
+        header('location:index.php');   // Renvoi vers l'index
+    } else {
+        deconnexion();  // Affichage de la procédure de déconnexion
+    }
+// SINON renvoi sur la page de traitement    
+} else {
+    header('location:traitement.php');
 }
 
-// Procedure html du compte utilisateur
-function comptePage(){
+
+// Procedure de deconnexion
+function deconnexion()
+{
 ?>
 
-<!DOCTYPE html>
+    <!DOCTYPE html>
     <html lang="fr">
 
     <head>
@@ -32,12 +42,12 @@ function comptePage(){
     <body>
         <div class="container">
             <div class="d-flex justify-content-center">
-                <div class="card mt-5 text-center" style="width: 18rem;">
-                    <img src="<?php echo $_SESSION['photoUser'] ?>" class="card-img-top" alt="login">
-                    <div class="card-body">
-                        <h5 class="card-title">Bonjour</h5>
-                        <p class="card-text">Bienvenue dans votre espace privé de connexion</p>
-                        <a href="deconnexion.php" class="btn btn-primary">Se déconnecter</a>
+                <div class="card mt-5" style="width: 18rem;">
+                    <h3 class="card-header text-center">Deconnexion</h3>
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Etes vous sur?</h5>
+                        <a href="deconnexion.php?deco=true" class="btn btn-success me-2">OUI</a>
+                        <a href="mon_compte.php" class="btn btn-danger ms-2">NON</a>
                     </div>
                 </div>
             </div>
