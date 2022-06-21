@@ -1,11 +1,16 @@
 <?php
 // session cookies
 session_start();
-// SI la seesion est validé 
-if (!empty($_SESSION['isConnected'])) {
+
+// SI les cookies sont présents
+if (!empty($_COOKIE['email']) && !empty($_COOKIE['password'])) {
     header('location:traitement.php'); // On envoi sur la page de traitement
+// SI la session est déja validé
+} else if (!empty($_SESSION['isConnected'])) {
+    header('location:traitement.php'); // On envoi sur la page de traitement
+// SINON on affiche la page    
 } else {
-    logStart(); // On affiche procedure de connexion
+    logStart();
 }
 
 
@@ -37,16 +42,21 @@ function logStart()
                     <div class="mx-auto card p-5 mt-5 col-lg-6">
                         <h3 class="text-center mb-5">Mon compte</h3>
                         <div class="form-floating">
-                            <input type="email" class="form-control mb-3" name="email" id="floatingInput" value="<?php if (!empty($_GET['email'])) {
-                                                                                                                        echo htmlentities($_GET['email'] ?? '');
-                                                                                                                    } ?>" placeholder="name@example.com">
+                            <input type="email" class="form-control mb-3" name="email" id="floatingInput" value="<?php if (!empty($_SESSION['email'])) {echo $_SESSION['email'];} ?>" placeholder="name@example.com">
                             <label for="floatingInput">Adresse mail</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="Password">
+                            <input type="password" class="form-control" name="password" id="floatingPassword" value="<?php if (!empty($_SESSION['password'])){echo $_SESSION['password'];} ?>" placeholder="Password">
                             <label for="floatingPassword">Mot de passe</label>
                         </div>
+                        <?php if(!empty($_GET['wrongUser'])){ echo '<p style="color:red">Email ou mot de passe incorrect</p>' ;} ?>
                         <button type="submit" class="btn btn-success mt-3" name="submit">Connexion</button>
+                        <div class="form-check mt-3">
+                            <input class="form-check-input" type="checkbox" name="stayLogged" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Rester connecté
+                            </label>
+                        </div>
                     </div>
                 </form>
             </div>

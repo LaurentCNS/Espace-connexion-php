@@ -1,18 +1,19 @@
 <?php
 // session cookies
 session_start();
-// SI la seesion est validé 
-if(!empty($_SESSION['isConnected'])){
+// SI la session est validé 
+if (!empty($_SESSION['isConnected'])) {
     comptePage(); // On lance la procedure
-}else{
+} else {
     header('location:traitement.php'); // On envoi sur la page de traintement
 }
 
 // Procedure html du compte utilisateur
-function comptePage(){
+function comptePage()
+{
 ?>
 
-<!DOCTYPE html>
+    <!DOCTYPE html>
     <html lang="fr">
 
     <head>
@@ -35,10 +36,18 @@ function comptePage(){
                 <div class="card mt-5 text-center" style="width: 18rem;">
                     <img src="<?php echo $_SESSION['photoUser'] ?>" class="card-img-top" alt="login">
                     <div class="card-body">
-                        <h5 class="card-title">Bonjour</h5>
+                        <h5 class="card-title">Bonjour <?php echo $_SESSION['surname'] . ' ' . $_SESSION['name'] ?></h5>
                         <p class="card-text">Bienvenue dans votre espace privé de connexion</p>
-                        <a href="deconnexion.php" class="btn btn-primary">Se déconnecter</a>
+                        <a href="deconnexion.php" class="btn btn-danger">Se déconnecter</a>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center mt-5">
+            <div class="card text-center" style="width: 22rem;">
+                <h5 class="card-header">INFOS SESSION ET COOKIES</h5>
+                <div class="card-body">
+                    <p class="card-text">La session restera active 3 heures par défault. Si les cookies sont activés avec l'option "resté connecté", elle sera valide 6 mois sauf si une déconnexion est effectué par l'utilsateur.</p>
                 </div>
             </div>
         </div>

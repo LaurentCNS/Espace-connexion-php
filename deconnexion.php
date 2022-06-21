@@ -8,6 +8,11 @@ if (!empty($_SESSION['isConnected'])) {
     if (!empty($_GET['deco'])){
         session_destroy();     // Destruction de la session
         header('location:index.php');   // Renvoi vers l'index
+        // Supression des cookies
+        setcookie('email');
+        unset($_COOKIE['email']); // nettoyer le tableau des cookies
+        setcookie('password');
+        unset($_COOKIE['password']); // nettoyer le tableau des cookies     
     } else {
         deconnexion();  // Affichage de la procédure de déconnexion
     }
